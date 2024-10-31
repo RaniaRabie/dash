@@ -31,6 +31,7 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  useTheme
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
@@ -39,6 +40,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const FAQ = () => {
+  const theme = useTheme(); // استخدام الثيم للوضع الحالي
   const [showInputFields, setShowInputFields] = useState(false);
   const [newQuestion, setNewQuestion] = useState("");
   const [newAnswer, setNewAnswer] = useState("");
@@ -231,23 +233,22 @@ const FAQ = () => {
   };
 
   return (
-    <Box sx={{ width: "100%", maxWidth: 800, margin: "0 auto" }}>
+    <Box sx={{ width: "100%", maxWidth: 800, margin: "0 auto", backgroundColor: theme.palette.mode === "dark" ? "#121212" : "inherit" }}>
       <Typography
         variant="h4"
         gutterBottom
         align="center"
-        sx={{ fontWeight: "bold", color: "#293241", fontSize: "30px" }}
+        sx={{ fontWeight: "bold", color: theme.palette.mode === "dark" ? "#ffffff" : "#293241", fontSize: "30px" }}
       >
         Frequently Asked Questions
       </Typography>
 
       {faqData.map((faq, index) => (
-        <Accordion key={index} sx={{ mb: 1 }}>
+        <Accordion key={index} sx={{ mb: 1, backgroundColor: theme.palette.mode === "dark" ? "#333" : "#f7f7f7", borderRadius: 1 }}>
           <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={<ExpandMoreIcon sx={{ color: theme.palette.mode === "dark" ? "#ffffff" : "inherit" }} />}
             aria-controls={`panel${index}-content`}
             id={`panel${index}-header`}
-            sx={{ backgroundColor: "#f7f7f7", borderRadius: 1 }}
           >
             {editIndex === index ? (
               <>
@@ -256,18 +257,18 @@ const FAQ = () => {
                   label="Edit Question"
                   value={editQuestion}
                   onChange={(e) => setEditQuestion(e.target.value)}
-                  sx={{ mb: 1 }}
+                  sx={{ mb: 1, backgroundColor: theme.palette.mode === "dark" ? "#444" : "inherit", color: theme.palette.mode === "dark" ? "#ffffff" : "inherit" }}
                 />
                 <TextField
                   fullWidth
                   label="Edit Answer"
                   value={editAnswer}
                   onChange={(e) => setEditAnswer(e.target.value)}
-                  sx={{ mb: 1 }}
+                  sx={{ mb: 1, backgroundColor: theme.palette.mode === "dark" ? "#444" : "inherit", color: theme.palette.mode === "dark" ? "#ffffff" : "inherit" }}
                 />
               </>
             ) : (
-              <Typography variant="h6">{faq.question}</Typography>
+              <Typography variant="h6" sx={{ color: theme.palette.mode === "dark" ? "#ffffff" : "inherit" }}>{faq.question}</Typography>
             )}
           </AccordionSummary>
           <AccordionDetails>
@@ -278,7 +279,7 @@ const FAQ = () => {
                   color="success"
                   startIcon={<SaveIcon />}
                   onClick={() => handleSave(index)}
-                  sx={{ mr: 1 , color:"#ee6c4d" }}
+                  sx={{ mr: 1, color: theme.palette.mode === "dark" ? "#ee6c4d" : "#ee6c4d" }}
                 >
                   Save
                 </Button>
@@ -286,23 +287,24 @@ const FAQ = () => {
                   variant="contained"
                   startIcon={<CancelIcon />}
                   onClick={handleCancelEdit}
-                  sx={{ mr: 1 , color:"#293241" }}
+                  sx={{ mr: 1, color: theme.palette.mode === "dark" ? "#293241" : "#293241" }}
                 >
                   Cancel
                 </Button>
               </Box>
             ) : (
-              <Typography>{faq.answer}</Typography>
+              <Typography sx={{ color: theme.palette.mode === "dark" ? "#ffffff" : "inherit" }}>{faq.answer}</Typography>
             )}
 
             {editIndex !== index && (
               <Box sx={{ mt: 2 }}>
                 <IconButton onClick={() => handleEdit(index)} color="primary">
-                  <EditIcon />
+                  <EditIcon sx={{ color: theme.palette.mode === "dark" ? "#3d5a80" : "primary.main" }} />
                 </IconButton>
                 <IconButton
                   onClick={() => handleDeleteConfirmation(index)}
                   color="error"
+                  sx={{ color: theme.palette.mode === "dark" ? "#ee6c4d" : "error.main" }}
                 >
                   <DeleteIcon />
                 </IconButton>
@@ -313,7 +315,7 @@ const FAQ = () => {
       ))}
 
       <Grid item xs={12}>
-        <Card>
+        <Card sx={{ backgroundColor: theme.palette.mode === "dark" ? "#333" : "#ffffff" }}>
           <CardContent>
             <Box mt={2}>
               <Button
@@ -346,21 +348,19 @@ const FAQ = () => {
                   label="New Question"
                   value={newQuestion}
                   onChange={(e) => setNewQuestion(e.target.value)}
-                  sx={{ mb: 2 , }}
+                  sx={{ mb: 2, backgroundColor: theme.palette.mode === "dark" ? "#444" : "inherit", color: theme.palette.mode === "dark" ? "#ffffff" : "inherit" }}
                 />
                 <TextField
                   fullWidth
                   label="New Answer"
                   value={newAnswer}
                   onChange={(e) => setNewAnswer(e.target.value)}
-                  sx={{ mb: 2 }}
+                  sx={{ mb: 2, backgroundColor: theme.palette.mode === "dark" ? "#444" : "inherit", color: theme.palette.mode === "dark" ? "#ffffff" : "inherit" }}
                 />
                 <Button
                   variant="contained"
                   onClick={handlePublish}
-                  sx={{ mr: 2 , backgroundColor:"#293241" , "&:hover": {
-                    backgroundColor: "#293241", // Change background color on hover
-                  },}}
+                  sx={{ mr: 2, backgroundColor: theme.palette.mode === "dark" ? "#293241" : "#293241", color: theme.palette.mode === "dark" ? "#ffffff" : "inherit","&:hover": { backgroundColor: "#293241" }}}
                 >
                   Publish
                 </Button>
@@ -389,7 +389,7 @@ const FAQ = () => {
         aria-labelledby="delete-confirmation-dialog"
         sx={{
           "& .MuiDialog-paper": {
-            backgroundColor: "#f9f9f9", // Background color for the dialog box
+            backgroundColor: theme.palette.mode === "dark" ? "#333" : "#f9f9f9", // Background color for the dialog box
             boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.5)", // Adding shadow to the dialog
             borderRadius: 4, // Rounded corners
             padding: "16px", // Padding around the content
@@ -399,7 +399,7 @@ const FAQ = () => {
         <DialogTitle
           id="delete-confirmation-dialog"
           sx={{
-            color: "#293241", // White text for the title
+            color: theme.palette.mode === "dark" ? "#ffffff" : "#293241", // White text for the title
             padding: "16px", // Padding around the title
             borderTopLeftRadius: 4, // Ensuring top corners are rounded
             borderTopRightRadius: 4,
@@ -411,13 +411,13 @@ const FAQ = () => {
         <DialogContent
           sx={{
             padding: "16px 24px", // Padding for the content area
-            backgroundColor: "#f9f9f9", // Keeping the background consistent
+            backgroundColor: theme.palette.mode === "dark" ? "#444" : "#f9f9f9", // Keeping the background consistent
           }}
         >
           <Typography
             sx={{
               fontSize: "16px",
-              color: "#3d405b", // Muted color for the message text
+              color: theme.palette.mode === "dark" ? "#b0bec5" : "#3d405b", // Muted color for the message text
               marginBottom: "16px", // Spacing below the text
             }}
           >
@@ -427,7 +427,7 @@ const FAQ = () => {
         <DialogActions
           sx={{
             padding: "8px 24px", // Spacing around the buttons
-            backgroundColor: "#f9f9f9", // Matching background color
+            backgroundColor: theme.palette.mode === "dark" ? "#333" : "#f9f9f9", // Matching background color
             justifyContent: "flex-end", // Align buttons to the right
           }}
         >
@@ -436,7 +436,7 @@ const FAQ = () => {
             sx={{
               textTransform: "none", // Remove uppercase transformation
               fontWeight: 500, // Slightly bolder font for buttons
-              color: "#3d5a80",
+              color: theme.palette.mode === "dark" ? "#cfd8dc" : "#3d5a80",
             }}
           >
             Cancel
@@ -446,7 +446,7 @@ const FAQ = () => {
             sx={{
               textTransform: "none",
               fontWeight: 500,
-              color: "#ee6c4d",
+              color: theme.palette.mode === "dark" ? "#ff8a65" : "#ee6c4d",
             }}
           >
             Delete
@@ -458,3 +458,4 @@ const FAQ = () => {
 };
 
 export default FAQ;
+

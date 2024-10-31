@@ -20,10 +20,12 @@ import {
   Button,
   Avatar,
   Snackbar,
-  Alert
+  Alert,
+  useTheme
 } from "@mui/material";
 
 const EditProfile = () => {
+  const theme = useTheme(); // للحصول على الثيم الحالي
   const [user, setUser] = useState({
     name: "John Doe",
     email: "john.doe@example.com",
@@ -42,24 +44,24 @@ const EditProfile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logic for handling form submission
     console.log("Profile updated:", user);
-    setOpenSnackbar(true); // Show snackbar notification
+    setOpenSnackbar(true);
   };
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
         padding: 4,
-        backgroundColor: '#f4f6f8',
+        backgroundColor: theme.palette.mode === "dark" ? "#333" : "#f4f6f8", // لون خلفية مخصص للوضع الداكن فقط
+        color: theme.palette.mode === "dark" ? "#ffffff" : "#000000", // لون النص بناءً على الوضع
         borderRadius: 2,
         boxShadow: 3,
-        width: '100%',
+        width: "100%",
         maxWidth: 600,
-        margin: 'auto',
+        margin: "auto"
       }}
     >
       <Avatar
@@ -71,8 +73,6 @@ const EditProfile = () => {
         Edit Profile
       </Typography>
 
-   
-
       {/* Form Fields */}
       <form onSubmit={handleSubmit} style={{ width: "100%" }}>
         <TextField
@@ -82,6 +82,11 @@ const EditProfile = () => {
           value={user.name}
           onChange={handleInputChange}
           margin="normal"
+          variant="outlined"
+          sx={{
+            backgroundColor: theme.palette.mode === "dark" ? "#444" : "inherit", // لون الخلفية في الوضع الداكن فقط
+            color: theme.palette.mode === "dark" ? "#ffffff" : "inherit"
+          }}
         />
         <TextField
           fullWidth
@@ -91,6 +96,11 @@ const EditProfile = () => {
           value={user.email}
           onChange={handleInputChange}
           margin="normal"
+          variant="outlined"
+          sx={{
+            backgroundColor: theme.palette.mode === "dark" ? "#444" : "inherit",
+            color: theme.palette.mode === "dark" ? "#ffffff" : "inherit"
+          }}
         />
         <TextField
           fullWidth
@@ -101,30 +111,35 @@ const EditProfile = () => {
           margin="normal"
           multiline
           rows={4}
+          variant="outlined"
+          sx={{
+            backgroundColor: theme.palette.mode === "dark" ? "#444" : "inherit",
+            color: theme.palette.mode === "dark" ? "#ffffff" : "inherit"
+          }}
         />
-        
       </form>
 
-   {/* Save Button */}
-   <Button
+      {/* Save Button */}
+      <Button
         variant="contained"
-        type="button" // Change type to "button"
-        onClick={handleSubmit} // Handle the form submission
+        type="button"
+        onClick={handleSubmit}
         sx={{
           borderRadius: "8px",
           width: "300px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          bgcolor: "#ee6c4d",
+          bgcolor: theme.palette.mode === "dark" ? "#ee6c4d" : "#ee6c4d",
+          color: theme.palette.mode === "dark" ? "#ffffff" : theme.palette.primary.contrastText,
           "&:hover": {
-            bgcolor: "#ee6c4d",
-            boxShadow: "none",
-          },
+            bgcolor: theme.palette.mode === "dark" ? "#d45a3a" : "#ee6c4d",
+          }
         }}
       >
         Save
       </Button>
+
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}

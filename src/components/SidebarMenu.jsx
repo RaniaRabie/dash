@@ -19,10 +19,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
-
 import { FaAngleDown } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import './sideBar.css'
+import "./sideBar.css";
 
 const menuAnimation = {
   hidden: {
@@ -56,7 +55,14 @@ const menuItemAnimation = {
   }),
 };
 
-const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen , open, handleDrawerClose}) => {
+const SidebarMenu = ({
+  route,
+  showAnimation,
+  isOpen,
+  setIsOpen,
+  open,
+  handleDrawerClose,
+}) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -75,7 +81,6 @@ const SidebarMenu = ({ route, showAnimation, isOpen, setIsOpen , open, handleDra
           <div className="icon">{route.icon}</div>
           <AnimatePresence>
             {isOpen && (
-              
               <motion.div
                 variants={showAnimation}
                 initial="hidden"
